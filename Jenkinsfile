@@ -21,7 +21,20 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                bat 'mvn clean test -U'
+                bat 'mvn clean test surefire-report:report -U'
+            }
+        }
+
+        stage('Publish Report') {
+            steps {
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target/site',
+                    reportFiles: 'surefire-report.html',
+                    reportName: 'TestNG Report'
+                ])
             }
         }
     }
