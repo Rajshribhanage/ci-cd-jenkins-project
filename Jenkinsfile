@@ -13,6 +13,12 @@ pipeline {
             }
         }
 
+        stage('Clean Workspace') {
+                    steps {
+                        cleanWs()
+                    }
+                }
+
         stage('Build & Test') {
             steps {
                 bat 'mvn clean test -U'
